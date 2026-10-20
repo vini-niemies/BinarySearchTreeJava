@@ -63,4 +63,20 @@ public class BinarySearchTree {
         return atual;
     }
 
+    public void exibirEmOrdem() {
+        System.out.print("Árvore atual: ");
+        exibirEmOrdemRecursivo(raiz);  // chama o metodo privado e envia a raiz como ponto de partida
+        System.out.println();
+    }
+
+    private void exibirEmOrdemRecursivo(No atual) {
+        if (atual != null) {
+            exibirEmOrdemRecursivo(atual.esquerdo); // visita o lado esquerdo
+            System.out.print(atual.valor + " ");    // visita a raiz
+            exibirEmOrdemRecursivo(atual.direito);  // visita o lado direito
+
+            // se for em pré-ordem ou pós-ordem só altera a ordem da visita
+        }
+    }
+
 }
