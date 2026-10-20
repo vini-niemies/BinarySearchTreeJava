@@ -2,10 +2,10 @@ public class BinarySearchTree {
     No raiz;
 
     void inserir(int valor) {
-        raiz = inserirValor(raiz, valor); // isso permite inserir o primeiro nó, quando a raiz ainda é null
+        raiz = inserir(raiz, valor); // isso permite inserir o primeiro nó, quando a raiz ainda é null
     }
 
-    No inserirValor(No atual, int valor) {
+    No inserir(No atual, int valor) {
         // atual = nó que o metodo tá analisando no momento
         // valor = novo valor a ser inserido na árvore
 
@@ -14,12 +14,32 @@ public class BinarySearchTree {
         }
 
         if (valor < atual.valor) {
-            atual.esquerdo = inserirValor(atual.esquerdo, valor);  // se o valor novo for menor que o valor analisado, ele vai atualizar o valor do nó esquerdo filho e guardar a referência (valor)
+            atual.esquerdo = inserir(atual.esquerdo, valor);  // se o valor novo for menor que o valor analisado, ele vai atualizar o valor do nó esquerdo filho e guardar a referência (valor)
 
         } else if (valor > atual.valor) {
-            atual.direito = inserirValor(atual.direito, valor); // se o valor novo for maior que o valor analisado, ele vai atualizar o valor do nó direito filho e guardar a referência (valor)
+            atual.direito = inserir(atual.direito, valor); // se o valor novo for maior que o valor analisado, ele vai atualizar o valor do nó direito filho e guardar a referência (valor)
         }
 
         return atual; // retorna valor atual para guardar referência ao nó antigo
     }
+
+
+    boolean buscar(No atual, int valor) {  // implementa boolean na busca porque só pode ser True/false
+        if (atual == null) {
+            return false;  // se atual for null, vai retornar false (valor não encontrado)
+        }
+
+        if (valor == atual.valor) {  // se o valor atual = valor procurado, vai retornar true (valor encontrado)
+            return true;
+        }
+
+        if (valor < atual.valor) {
+            return buscar(atual.esquerdo, valor);  // se o valor procurado < valor atual, o atual vira o filho esquerdo
+        } else {
+            return buscar(atual.direito, valor); // se o valor procurado > valor atual, o atual vira o filho direito
+        }
+
+        // metodo inserir devolve um nó para conectar o novo nó, enquanto o metodo buscar devolve boolean
+    }
+
 }
