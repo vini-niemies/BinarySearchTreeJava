@@ -42,4 +42,25 @@ public class BinarySearchTree {
         // metodo inserir devolve um nó para conectar o novo nó, enquanto o metodo buscar devolve boolean
     }
 
+    No removerFolha(No atual, int valor) {
+        if (atual == null) {
+            return null;
+        }
+
+        if (valor < atual.valor) {
+            atual.esquerdo = removerFolha(atual.esquerdo, valor); // valor menor = ir para a esquerda
+
+        } else if (valor > atual.valor) {
+            atual.direito = removerFolha(atual.direito, valor); // valor maior = ir para a direita
+
+        } else {
+
+            if (atual.esquerdo == null && atual.direito == null) {
+                return null;
+            }  // só remover o nó quando encontramos o valor correto
+        }
+
+        return atual;
+    }
+
 }
