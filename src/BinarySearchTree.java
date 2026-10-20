@@ -42,6 +42,18 @@ public class BinarySearchTree {
         // metodo inserir devolve um nó para conectar o novo nó, enquanto o metodo buscar devolve boolean
     }
 
+    public void exibirEmOrdem(No atual) {
+        // Se for a primeira chamada (quando passamos a raiz do lado de fora),
+        // podemos apenas tratar a verificação do nó.
+        if (atual != null) {
+            exibirEmOrdem(atual.esquerdo); // visita o lado esquerdo
+            System.out.print(atual.valor + " ");    // visita a raiz
+            exibirEmOrdem(atual.direito);  // visita o lado direito
+        }
+
+        // se for em pré-ordem ou pós-ordem só altera a ordem da visita
+    }
+
     No removerFolha(No atual, int valor) {
         if (atual == null) {
             return null;
@@ -63,17 +75,42 @@ public class BinarySearchTree {
         return atual;
     }
 
-    public void exibirEmOrdem(No atual) {
-        // Se for a primeira chamada (quando passamos a raiz do lado de fora),
-        // podemos apenas tratar a verificação do nó.
-        if (atual != null) {
-            exibirEmOrdem(atual.esquerdo); // visita o lado esquerdo
-            System.out.print(atual.valor + " ");    // visita a raiz
-            exibirEmOrdem(atual.direito);  // visita o lado direito
+    public No remover(No atual, int valor) {
+        // Caso base: valor não encontrado ou árvore vazia
+        if (atual == null) {
+            return null;
         }
 
-        // se for em pré-ordem ou pós-ordem só altera a ordem da visita
+        // 1. Navegação para encontrar o nó
+        if (valor < atual.valor) {
+            atual.esquerdo = remover(atual.esquerdo, valor);
+        } else if (valor > atual.valor) {
+            atual.direito = remover(atual.direito, valor);
+        } else {
+            // Encontrou o nó a ser removido!
+
+            // Caso 1 e Caso 2: Nó folha ou com apenas 1 filho
+            if (atual.esquerdo == null) {
+                return atual.direito;
+            } else if (atual.direito == null) {
+                return atual.esquerdo;
+            }
+
+            // Caso 3: Nó com 2 filhos (busca o menor valor da direita inline)
+            No aux = atual.direito;
+            while (aux.esquerdo != null) {
+                aux = aux.esquerdo;
+            }
+
+            // Substitui o valor do nó atual pelo sucessor
+            atual.valor = aux.valor;
+
+            // Remove o sucessor que ficou duplicado
+            atual.direito = remover(atual.direito, aux.valor);
+        }
+
+        return atual;
     }
-    
+
 
 }
